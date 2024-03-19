@@ -1,13 +1,19 @@
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, View, Image, Modal } from 'react-native';
 import Header from './src/components/Header';
 import NewBudget from './src/components/NewBudget';
 import { useState } from 'react';
 import BudgetControl from './src/components/BudgetControl';
+import SpendForm from './src/components/SpendForm';
 
 const App = () => {
 
   const [isValidBudget, setIsValidBudget] = useState(false)
   const [budget, setbudget] = useState(0)
+  const [expenses, setExpenses] = useState([
+
+  ])
+  const [modal, setModal] = useState(false)
+
 
   newBudgetHandle = (budget) => {
     if (Number(budget) > 0) {
@@ -30,8 +36,28 @@ const App = () => {
             setbudget={setbudget} />
         ) : (
           <BudgetControl
-            budget={budget} />)}
+            budget={budget} expenses={expenses} />)}
       </View>
+
+      {modal && (
+        <Modal
+          animationType='slide'
+          visible={modal}
+        >
+          <SpendForm />
+
+        </Modal>
+      )}
+
+      {isValidBudget && (
+        <Pressable
+          onPress={() => setModal(true)}
+        >
+          <Image
+            style={styles.image}
+            source={require('./src/img/nuevo-gasto.png')} />
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -44,5 +70,12 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3b82f6',
   },
+  image: {
+    width: 70,
+    height: 70,
+    position: 'absolute',
+    top: 190,
+    right: 20
+  }
 });
 export default App
