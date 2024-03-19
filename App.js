@@ -1,12 +1,18 @@
 import { Alert, StyleSheet, View } from 'react-native';
 import Header from './src/components/Header';
 import NewBudget from './src/components/NewBudget';
+import { useState } from 'react';
+import BudgetControl from './src/components/BudgetControl';
 
 const App = () => {
 
+  const [isValidBudget, setIsValidBudget] = useState(false)
+  const [budget, setbudget] = useState(0)
+
   newBudgetHandle = (budget) => {
     if (Number(budget) > 0) {
-      console.log('presupuesto valido')
+
+      setIsValidBudget(true)
     } else {
       Alert.alert('Error', ' El presupuesto debe ser mayor de 0', 'O')
     }
@@ -17,8 +23,14 @@ const App = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Header />
-        <NewBudget
-          newBudgetHandle={newBudgetHandle} />
+        {!isValidBudget ? (
+          <NewBudget
+            newBudgetHandle={newBudgetHandle}
+            budget={budget}
+            setbudget={setbudget} />
+        ) : (
+          <BudgetControl
+            budget={budget} />)}
       </View>
     </View>
   );
