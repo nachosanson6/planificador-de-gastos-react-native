@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pressable, Text, TextInput, View, StyleSheet } from 'react-native'
 
-const NewBudget = () => {
+const NewBudget = ({ newBudgetHandle }) => {
+
+    const [budget, setbudget] = useState(0)
+
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Definir presupuesto</Text>
@@ -9,8 +12,12 @@ const NewBudget = () => {
                 keyboardType='numeric'
                 placeholder='Agrega tu presupuesto: Ej:300'
                 style={styles.input}
+                value={budget.toString()}
+                onChangeText={setbudget}
             />
-            <Pressable style={styles.btn}>
+            <Pressable style={styles.btn}
+                onPress={() => newBudgetHandle(budget)}
+            >
                 <Text style={styles.btnText}> Agregar Presupuesto</Text>
             </Pressable>
         </View>
