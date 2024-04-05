@@ -9,9 +9,7 @@ const App = () => {
 
   const [isValidBudget, setIsValidBudget] = useState(false)
   const [budget, setbudget] = useState(0)
-  const [expenses, setExpenses] = useState([
-
-  ])
+  const [expenses, setExpenses] = useState([])
   const [modal, setModal] = useState(false)
 
 
@@ -29,6 +27,8 @@ const App = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Header />
+
+
         {!isValidBudget ? (
           <NewBudget
             newBudgetHandle={newBudgetHandle}
@@ -38,6 +38,7 @@ const App = () => {
           <BudgetControl
             budget={budget} expenses={expenses} />)}
       </View>
+
 
       {modal && (
         <Modal
