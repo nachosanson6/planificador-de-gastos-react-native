@@ -45,7 +45,7 @@ const App = () => {
           animationType='slide'
           visible={modal}
         >
-          <SpendForm />
+          <SpendForm setModal={setModal} />
 
         </Modal>
       )}

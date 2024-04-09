@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, SafeAreaView, TextInput, StyleSheet, Pressable } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import globalStyles from '../styles'
 
-const SpendForm = () => {
+
+const SpendForm = ({ setModal }) => {
+
+    const [name, setName] = useState('')
+    const [amount, setAmount] = useState('')
+    const [category, setCategory] = useState('')
+
     return (
         <SafeAreaView style={styles.container}>
             <View>
-                <Pressable>
-                    <Text>Cancel</Text>
+                <Pressable style={styles.cancelBtn} onPress={() => setModal(false)}>
+                    <Text style={styles.cancelBtnText}>Cancel</Text>
                 </Pressable>
             </View>
 
@@ -19,7 +25,9 @@ const SpendForm = () => {
                     <Text style={styles.label}>Nombre gasto</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder='Nombre del gasto. ej.comida'
+                        placeholder='Nombre del gasto. ej.Comida'
+                        value={name}
+                        onChangeText={setName}
                     />
                 </View>
                 <View style={styles.section}>
@@ -28,12 +36,14 @@ const SpendForm = () => {
                         style={styles.input}
                         placeholder='Gasto. ej.300'
                         keyboardType='numeric'
+                        value={amount}
+                        onChangeText={setAmount}
                     />
                 </View>
 
                 <View style={styles.section}>
                     <Text style={styles.label}>Categoría Gasto</Text>
-                    <Picker >
+                    <Picker selectedValue={category} onValueChange={(itemValue) => { setCategory(itemValue) }}>
                         <Picker.Item label="-- Seleccione --" value="" />
                         <Picker.Item label="Ahorro" value="ahorro" />
                         <Picker.Item label="Comida" value="comida" />
@@ -57,6 +67,19 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#1e40af',
         flex: 1
+    },
+    cancelBtn: {
+        backgroundColor: '#db2777',
+        padding: 10,
+        marginTop: 30,
+        marginHorizontal: 10,
+        borderRadius: 10
+    },
+    cancelBtnText: {
+        textTransform: 'uppercase',
+        fontWeight: 'bold',
+        color: '#fff',
+        textAlign: 'center'
     },
     form: {
         ...globalStyles.container
@@ -93,7 +116,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         textTransform: 'uppercase'
-    }
+    },
+
 })
 
 export default SpendForm
